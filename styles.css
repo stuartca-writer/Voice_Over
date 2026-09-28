@@ -59,8 +59,18 @@ audio { width:100%; margin:15px 0 0; }
 code { font-size:.72rem; }
 .about { background:var(--cream); }
 .about-grid { display:grid; grid-template-columns:.75fr 1.25fr; gap:80px; align-items:center; }
-.about-photo { text-align:center; }
-.portrait-placeholder { aspect-ratio:1/1; max-width:350px; margin:auto; border-radius:50%; background:#d7c6b1; display:grid; place-items:center; font-family:"Playfair Display",serif; font-size:6rem; color:var(--white); }
+/*.about-photo { text-align:center; }
+.-placeholder { aspect-ratio:1/1; max-width:350px; margin:auto; border-radius:50%; background:#d7c6b1; display:grid; place-items:center; font-family:"Playfair Display",serif; font-size:6rem; color:var(--white); }*/
+.about-photo img {
+  width: 100%;
+  max-width: 350px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
+  box-shadow: 0 20px 45px rgba(23, 23, 23, 0.15);
+}
 .about-photo p { font-size:.72rem; color:var(--muted); }
 .about-grid > div:last-child > p:not(.eyebrow) { color:var(--muted); max-width:680px; }
 .stats { display:flex; gap:45px; margin-top:35px; padding-top:25px; border-top:1px solid #d2c8b9; }
