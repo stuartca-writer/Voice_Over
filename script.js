@@ -17,46 +17,20 @@ if(servicesSection&&sampleSection&&sampleGrid){
   const intro=sampleSection.querySelector('.section-heading p:last-child');
   if(heading)heading.textContent='What I can narrate — and hear it in action.';
   if(intro)intro.textContent='Choose a sample to hear how the voice works across different types of narration.';
-  const serviceByTag={
-    'AUDIOBOOK':serviceData.find(s=>s.title==='Audiobooks'),
-    'CHARACTER':serviceData.find(s=>s.title==='Character Voices'),
-    'NON-FICTION':serviceData.find(s=>s.title==='Technical & Corporate'),
-    "CHILDREN'S":serviceData.find(s=>s.title==='Audiobooks')
-  };
-  sampleGrid.querySelectorAll('.sample-card').forEach(card=>{
-    const tag=card.querySelector('.tag')?.textContent.trim();
-    const service=serviceByTag[tag];
-    if(service){
-      const label=document.createElement('div');
-      label.className='sample-service';
-      label.innerHTML='<strong>'+service.title+'</strong><span>'+service.text+'</span>';
-      const title=card.querySelector('h3');
-      if(title)title.insertAdjacentElement('beforebegin',label);
-    }
-  });
+  const style=document.createElement('style');
+  style.textContent='.sample-service{margin:-18px 0 18px;padding:12px 14px;border-left:3px solid var(--accent);background:rgba(200,107,69,.07);border-radius:0 10px 10px 0}.sample-service strong,.sample-service span{display:block}.sample-service strong{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-dark)}.sample-service span{font-size:.78rem;color:var(--muted);margin-top:3px}';
+  document.head.appendChild(style);
+  const serviceByTag={'AUDIOBOOK':serviceData.find(s=>s.title==='Audiobooks'),'CHARACTER':serviceData.find(s=>s.title==='Character Voices'),'NON-FICTION':serviceData.find(s=>s.title==='Technical & Corporate'),"CHILDREN'S":serviceData.find(s=>s.title==='Audiobooks')};
+  sampleGrid.querySelectorAll('.sample-card').forEach(card=>{const tag=card.querySelector('.tag')?.textContent.trim();const service=serviceByTag[tag];if(service){const label=document.createElement('div');label.className='sample-service';label.innerHTML='<strong>'+service.title+'</strong><span>'+service.text+'</span>';const title=card.querySelector('h3');if(title)title.insertAdjacentElement('beforebegin',label)}});
   document.querySelectorAll('.nav-links a[href="#services"]').forEach(link=>{link.setAttribute('href','#samples');link.textContent='What I narrate'});
 }
 
 /* VOICE SAMPLE EXPAND / COLLAPSE */
 const samplesToggle=document.getElementById('samplesToggle');
-if(sampleGrid&&samplesToggle){
-  const sampleCards=sampleGrid.querySelectorAll('.sample-card');
-  if(sampleCards.length<=3)samplesToggle.style.display='none';
-  samplesToggle.addEventListener('click',()=>{const expanded=sampleGrid.classList.toggle('expanded');samplesToggle.setAttribute('aria-expanded',expanded);samplesToggle.setAttribute('aria-label',expanded?'Show fewer voice samples':'Show more voice samples');samplesToggle.textContent=expanded?'↑':'↓'});
-}
+if(sampleGrid&&samplesToggle){const sampleCards=sampleGrid.querySelectorAll('.sample-card');if(sampleCards.length<=3)samplesToggle.style.display='none';samplesToggle.addEventListener('click',()=>{const expanded=sampleGrid.classList.toggle('expanded');samplesToggle.setAttribute('aria-expanded',expanded);samplesToggle.setAttribute('aria-label',expanded?'Show fewer voice samples':'Show more voice samples');samplesToggle.textContent=expanded?'↑':'↓'})}
 
 /* AUTOMATIC SAMPLE NUMBERING */
 sampleGrid?.querySelectorAll('.sample-card').forEach((card,index)=>{const number=card.querySelector('.sample-number');if(number)number.textContent=String(index+1).padStart(2,'0')});
 
 /* AUDIO PLAYERS */
-document.querySelectorAll('.audio-player').forEach(player=>{
-  const audio=player.querySelector('audio');const button=player.querySelector('.play-button');const waveform=player.querySelector('.waveform-container');const progress=player.querySelector('.wave-progress');const timeDisplay=player.querySelector('.audio-time');
-  function formatTime(seconds){if(!Number.isFinite(seconds))return '0:00';const minutes=Math.floor(seconds/60);const remainingSeconds=Math.floor(seconds%60);return `${minutes}:${remainingSeconds.toString().padStart(2,'0')}`}
-  button.addEventListener('click',()=>{if(audio.paused)audio.play();else audio.pause()});
-  audio.addEventListener('loadedmetadata',()=>{timeDisplay.textContent=formatTime(audio.duration)});
-  audio.addEventListener('timeupdate',()=>{if(!audio.duration)return;const percentage=(audio.currentTime/audio.duration)*100;progress.style.width=`${percentage}%`;timeDisplay.textContent=formatTime(audio.currentTime)});
-  audio.addEventListener('play',()=>{button.textContent='❚❚';player.classList.add('playing')});
-  audio.addEventListener('pause',()=>{button.textContent='▶';player.classList.remove('playing')});
-  audio.addEventListener('ended',()=>{button.textContent='▶';player.classList.remove('playing');progress.style.width='0%';timeDisplay.textContent=formatTime(audio.duration)});
-  waveform.addEventListener('click',event=>{if(!audio.duration)return;const rect=waveform.getBoundingClientRect();const clickPosition=(event.clientX-rect.left)/rect.width;audio.currentTime=clickPosition*audio.duration});
-});
+document.querySelectorAll('.audio-player').forEach(player=>{const audio=player.querySelector('audio');const button=player.querySelector('.play-button');const waveform=player.querySelector('.waveform-container');const progress=player.querySelector('.wave-progress');const timeDisplay=player.querySelector('.audio-time');function formatTime(seconds){if(!Number.isFinite(seconds))return '0:00';const minutes=Math.floor(seconds/60);const remainingSeconds=Math.floor(seconds%60);return `${minutes}:${remainingSeconds.toString().padStart(2,'0')}`}button.addEventListener('click',()=>{if(audio.paused)audio.play();else audio.pause()});audio.addEventListener('loadedmetadata',()=>{timeDisplay.textContent=formatTime(audio.duration)});audio.addEventListener('timeupdate',()=>{if(!audio.duration)return;const percentage=(audio.currentTime/audio.duration)*100;progress.style.width=`${percentage}%`;timeDisplay.textContent=formatTime(audio.currentTime)});audio.addEventListener('play',()=>{button.textContent='❚❚';player.classList.add('playing')});audio.addEventListener('pause',()=>{button.textContent='▶';player.classList.remove('playing')});audio.addEventListener('ended',()=>{button.textContent='▶';player.classList.remove('playing');progress.style.width='0%';timeDisplay.textContent=formatTime(audio.duration)});waveform.addEventListener('click',event=>{if(!audio.duration)return;const rect=waveform.getBoundingClientRect();const clickPosition=(event.clientX-rect.left)/rect.width;audio.currentTime=clickPosition*audio.duration})});
