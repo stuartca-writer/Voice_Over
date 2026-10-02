@@ -115,3 +115,37 @@ footer a { color:#ddd8d0; text-decoration:none; }
   .contact .button { margin-top:20px; }
   .footer-inner { display:block; }
 }
+/* Hide sample cards after the first three */
+.sample-card:nth-child(n+4) {
+  display: none;
+}
+
+/* Expanded state */
+.sample-grid.expanded .sample-card:nth-child(n+4) {
+  display: block;
+}
+
+/* Show more button */
+.samples-toggle {
+  display: flex;
+  justify-content: center;
+  margin-top: 35px;
+}
+
+.samples-toggle button {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.samples-toggle button:hover {
+  background: var(--ink);
+  color: var(--white);
+  transform: translateY(2px);
+}
