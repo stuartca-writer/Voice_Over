@@ -74,7 +74,24 @@ if (sampleGrid && samplesToggle) {
   });
 }
 
+/* ========================================
+   AUTOMATIC SAMPLE NUMBERING
+   ======================================== */
 
+const sampleCards = document.querySelectorAll(
+  '#sampleGrid .sample-card'
+);
+
+sampleCards.forEach((card, index) => {
+
+  const number = card.querySelector('.sample-number');
+
+  if (number) {
+    number.textContent =
+      String(index + 1).padStart(2, '0');
+  }
+
+});
 /* ========================================
    AUDIO PLAYERS
    ======================================== */
