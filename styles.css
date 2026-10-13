@@ -149,3 +149,134 @@ footer a { color:#ddd8d0; text-decoration:none; }
   color: var(--white);
   transform: translateY(2px);
 }
+
+
+/* CUSTOM AUDIO PLAYERS */
+.audio-player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin: 20px 0 8px;
+}
+
+.play-button {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: grid;
+  place-items: center;
+  padding: 0 0 0 2px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.play-button:hover {
+  background: var(--accent);
+  transform: scale(1.05);
+}
+
+.play-button:focus-visible,
+.samples-toggle button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.waveform-container {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 46px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.waveform {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3px;
+}
+
+.waveform span {
+  display: block;
+  flex: 1 1 0;
+  min-width: 2px;
+  max-width: 4px;
+  height: 12px;
+  background: #c9c3ba;
+  border-radius: 3px;
+}
+
+.waveform span:nth-child(3n) { height: 21px; }
+.waveform span:nth-child(4n) { height: 28px; }
+.waveform span:nth-child(5n) { height: 16px; }
+.waveform span:nth-child(7n) { height: 35px; }
+.waveform span:nth-child(11n) { height: 24px; }
+
+.wave-progress {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.wave-progress::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  background: var(--accent);
+  clip-path: polygon(
+    0 43%, 2% 35%, 4% 56%, 6% 29%, 8% 62%,
+    10% 39%, 12% 22%, 14% 59%, 16% 35%, 18% 67%,
+    20% 31%, 22% 54%, 24% 25%, 26% 61%, 28% 40%,
+    30% 72%, 32% 33%, 34% 58%, 36% 27%, 38% 64%,
+    40% 39%, 42% 70%, 44% 30%, 46% 56%, 48% 24%,
+    50% 63%, 52% 37%, 54% 69%, 56% 31%, 58% 57%,
+    60% 23%, 62% 65%, 64% 40%, 66% 72%, 68% 32%,
+    70% 56%, 72% 26%, 74% 63%, 76% 38%, 78% 69%,
+    80% 31%, 82% 59%, 84% 24%, 86% 64%, 88% 39%,
+    90% 72%, 92% 31%, 94% 55%, 96% 25%, 98% 63%,
+    100% 42%, 100% 58%, 98% 37%, 96% 72%, 94% 45%,
+    92% 69%, 90% 28%, 88% 61%, 86% 36%, 84% 76%,
+    82% 41%, 80% 69%, 78% 31%, 76% 62%, 74% 37%,
+    72% 74%, 70% 44%, 68% 68%, 66% 28%, 64% 60%,
+    62% 35%, 60% 77%, 58% 43%, 56% 69%, 54% 31%,
+    52% 63%, 50% 37%, 48% 76%, 46% 44%, 44% 70%,
+    42% 30%, 40% 61%, 38% 36%, 36% 73%, 34% 42%,
+    32% 67%, 30% 28%, 28% 60%, 26% 36%, 24% 75%,
+    22% 43%, 20% 69%, 18% 32%, 16% 64%, 14% 40%,
+    12% 72%, 10% 42%, 8% 68%, 6% 34%, 4% 58%,
+    2% 42%, 0 58%
+  );
+}
+
+.audio-time {
+  width: 38px;
+  flex: 0 0 38px;
+  color: var(--muted);
+  font-size: .7rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.audio-player audio {
+  display: none;
+}
+
+@media (max-width: 500px) {
+  .audio-player { gap: 8px; }
+  .play-button { width: 38px; height: 38px; flex-basis: 38px; }
+  .waveform { gap: 2px; }
+  .audio-time { width: 34px; flex-basis: 34px; font-size: .65rem; }
+}
